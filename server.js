@@ -30,7 +30,7 @@ const server = createServer(async (req, res) => {
         // the data will then be provided to the frontend
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(response));
+        res.end(JSON.stringify(response.organic_results));
     } catch(error) {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');

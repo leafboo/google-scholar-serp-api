@@ -1,35 +1,21 @@
-import { useEffect, useState } from 'react';
 import './App.css'
+import List from './List'
 
-function App() {
+export default function App() {
+  
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  async function fetchData() {
-    const url = "http://localhost:3000/?q=Saturn"
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data)
-
-
-
-    } catch(error: unknown) {
-      if (typeof error === "string") {
-        error.toUpperCase() // works, `e` narrowed to string
-    } else if (error instanceof Error) {
-        error.message // works, `e` narrowed to Error
-    }
-    }
-  }
-
+  // Display the data
   return (
     <>
-      <span>hello world</span>
+      <div className='flex justify-center'>
+        <div>
+          <span>Search bar</span>
+          <List query="Saturn" />
+        </div>
+      </div>
+      
+      
     </>
   )
 }
 
-export default App
