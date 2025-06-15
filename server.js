@@ -8,6 +8,12 @@ const port = 3000;
 const apiKey = process.env.API_KEY;
 
 const server = createServer(async (req, res) => {
+    // CORS
+    const allowed_domain = '*' // Allow all origin to access the server (change this later) 
+    res.setHeader('Access-Control-Allow-Origin', allowed_domain);
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
     const url = new URL(req.url, `http://${req.headers.host}`); // new URL(input, base) => https://base/input
     const searchParams = url.searchParams; // Returns an object of {key, value}
     const query = searchParams.get('q'); // Returns the value of the key 'q'
@@ -16,7 +22,7 @@ const server = createServer(async (req, res) => {
     try {
         // get the data from the SerpApi
         const response = await getJson({
-            engine: "google",
+            engine: "google_scholar",
             api_key: apiKey, 
             q: query,
             location: "Austin, Texas",
