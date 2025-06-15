@@ -8,12 +8,17 @@ const port = 3000;
 const apiKey = process.env.API_KEY;
 
 const server = createServer(async (req, res) => {
+    const url = new URL(req.url, `http://${req.headers.host}`); // new URL(input, base) => https://base/input
+    const searchParams = url.searchParams; // Returns an object of {key, value}
+    const query = searchParams.get('q'); // Returns the value of the key 'q'
+
+
     try {
         // get the data from the SerpApi
         const response = await getJson({
             engine: "google",
             api_key: apiKey, 
-            q: "Computer Science",
+            q: query,
             location: "Austin, Texas",
         });
         // the data will then be provided to the frontend
