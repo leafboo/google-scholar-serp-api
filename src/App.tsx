@@ -9,7 +9,7 @@ export default function App() {
     <>
       <div className='flex justify-center'>
         <div>
-          <span>Search bar</span>
+          <div className='flex justify-center'>Search bar</div>
           <List query="Saturn" />
         </div>
       </div>
