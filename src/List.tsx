@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ListCard from './ListCard';
 
 type ListProps = {
-    query: String
+    query: String | null
 }
 
 type SearchResults = {
@@ -21,8 +21,12 @@ export default function List(props: ListProps) {
     const [searchResults, setSearchResults] = useState<SearchResults[]>()
 
     useEffect(() => {
-        fetchData() 
-    }, [])
+        if (!props.query) {
+            console.log("Search query is null")
+        } else {
+            fetchData()
+        }
+    }, [props.query])
 
     async function fetchData() {
         const url = `http://localhost:3000/?q=${props.query}`
@@ -31,11 +35,9 @@ export default function List(props: ListProps) {
         const data = await response.json();
         setSearchResults(data)
 
-
-
         } catch(error: unknown) {
         if (error instanceof Error) {
-            error.message // works, `e` narrowed to Error
+            error.message 
         }
         }
     }
