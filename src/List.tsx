@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
 import ListCard from './ListCard';
 
+type SelectedPaper = {
+    id: string
+}
+
 type ListProps = {
-    query: String | null
+    query: string | null;
+    updateSelectedPapers: (obj: SelectedPaper) => void;
 }
 
 type SearchResults = {
-    title: String,
-    snippet: String,
-    link: String,
+    title: string,
+    snippet: string,
+    link: string,
     publication_info: {
-        summary: String
+        summary: string
     }
 }
 
@@ -52,7 +57,8 @@ export default function List(props: ListProps) {
                         <ListCard title={researchPaper.title}
                                   summary={researchPaper.publication_info.summary}
                                   snippet={researchPaper.snippet}
-                                  link={researchPaper.link} />
+                                  link={researchPaper.link}
+                                  updateSelectedPapers={props.updateSelectedPapers}  />
                     )
                     })
                 }

@@ -2,8 +2,11 @@ import './App.css'
 import List from './List'
 import Button from './Button'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 
+type SelectedPaper = {
+  id: string
+}
 
 // get the formData
 // pass the query as props 
@@ -11,7 +14,23 @@ import { useState } from 'react'
 export default function App() {
   const { register, handleSubmit } = useForm()
   const [searchQuery, setSearchQuery] = useState()
-  
+  const [selectedPapers, setSelectedPapers] = useState<SelectedPaper[]>([]) // <SelectedPaper[]> means the variable only accepts an array of objects with type 'SelectedPaper'
+
+
+  useEffect(() => {
+    console.log(selectedPapers);
+  }, [selectedPapers]);
+
+
+  console.log(selectedPapers);
+
+  function updateSelectedPapers(obj: SelectedPaper) {
+    const newSelectedPapers = [...selectedPapers, obj];
+    setSelectedPapers(newSelectedPapers);
+  }
+
+  console.log(selectedPapers);
+
 
   // Display the data
   return (
@@ -26,8 +45,8 @@ export default function App() {
               <button className='bg-blue-400 text-white p-2.5 ml-6 duration-[0.15s] hover:bg-blue-700 cursor-pointer'>Search</button>
             </form>
           </div>
-          <List query={searchQuery ?? null} />
-          <Button />
+          <List query={searchQuery ?? null} updateSelectedPapers={updateSelectedPapers} />
+          <Button /> /* when selected Papers is empty, do not display button */
         </div>
       </div>
       
