@@ -2,7 +2,7 @@ import './App.css'
 import List from './List'
 import Button from './Button'
 import { useForm } from 'react-hook-form'
-import {useEffect, useState} from 'react'
+import { useState } from 'react'
 
 type SelectedPaper = {
   id: string
@@ -17,34 +17,21 @@ export default function App() {
   const [selectedPapers, setSelectedPapers] = useState<SelectedPaper[]>([]) // <SelectedPaper[]> means the variable only accepts an array of objects with type 'SelectedPaper'
 
 
-  useEffect(() => {
-    console.log(selectedPapers);
-  }, [selectedPapers]);
-
-
-  console.log(selectedPapers);
-
   function updateSelectedPapers(obj: SelectedPaper, isChecked: boolean) {
     if(isChecked) {
       const newSelectedPapers = [...selectedPapers, obj];
       setSelectedPapers(newSelectedPapers);
     } else {
-      // iterate over the selected Papers and delete the object that has the same value as obj parameter
-      selectedPapers.forEach((paper) => {
-        if (paper.id === obj.id) {
-          const index = selectedPapers.findIndex(paper => paper.id === obj.id)
-          selectedPapers.splice(index, 1)
-          console.log(selectedPapers)
-          return;
-        }
-      })
+     
+
+      const newArray = selectedPapers.filter((paper) => paper.id !== obj.id)
+      setSelectedPapers(newArray)
 
     }
 
 
   }
 
-  console.log(selectedPapers);
 
 
   // Display the data
@@ -61,7 +48,10 @@ export default function App() {
             </form>
           </div>
           <List query={searchQuery ?? null} updateSelectedPapers={updateSelectedPapers} />
-          <Button /> /* when selected Papers is empty, do not display button */
+          {
+            selectedPapers.length !== 0 ? <Button /> : ""
+          }
+          <div>Papers selected: {selectedPapers.length === 0 ? "0" : selectedPapers.length.toString()}</div>
         </div>
       </div>
       

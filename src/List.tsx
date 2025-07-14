@@ -26,8 +26,6 @@ export default function List(props: ListProps) {
     // useState for the data here
     const [searchResults, setSearchResults] = useState<SearchResults[]>()
     
-    // LOOK AT THE CONTENTS OF THE FETCHED DATA FOR TESTING PURPOSES
-    console.log(searchResults);
 
     useEffect(() => {
         if (!props.query) {
