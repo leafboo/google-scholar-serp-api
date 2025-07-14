@@ -7,15 +7,16 @@ type SelectedPaper = {
 
 type ListProps = {
     query: string | null;
-    updateSelectedPapers: (obj: SelectedPaper) => void;
+    updateSelectedPapers: (obj: SelectedPaper, isChecked: boolean) => void;
 }
 
 type SearchResults = {
-    title: string,
-    snippet: string,
-    link: string,
+    result_id: string;
+    title: string;
+    snippet: string;
+    link: string;
     publication_info: {
-        summary: string
+        summary: string;
     }
 }
 
@@ -24,6 +25,9 @@ type SearchResults = {
 export default function List(props: ListProps) {
     // useState for the data here
     const [searchResults, setSearchResults] = useState<SearchResults[]>()
+    
+    // LOOK AT THE CONTENTS OF THE FETCHED DATA FOR TESTING PURPOSES
+    console.log(searchResults);
 
     useEffect(() => {
         if (!props.query) {
@@ -54,7 +58,8 @@ export default function List(props: ListProps) {
                 {
                     searchResults?.map(researchPaper => {
                     return (
-                        <ListCard title={researchPaper.title}
+                        <ListCard id={researchPaper.result_id}
+                                  title={researchPaper.title}
                                   summary={researchPaper.publication_info.summary}
                                   snippet={researchPaper.snippet}
                                   link={researchPaper.link}

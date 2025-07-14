@@ -5,11 +5,12 @@ type SelectedPaper = {
 }
 
 type ListCardProps = {
+    id: string
     title: string;
     summary: string;
     snippet: string;
     link: string;
-    updateSelectedPapers: (obj: SelectedPaper) => void;
+    updateSelectedPapers: (obj: SelectedPaper, isChecked: boolean) => void;
 }
 
 export default function ListCard(props: ListCardProps) {
@@ -20,16 +21,22 @@ export default function ListCard(props: ListCardProps) {
         console.log(isChecked);
 
         if (isChecked) {
-            props.updateSelectedPapers({id: "sample id"});
-        } else {
-            // if the user unchecks the checked checkbox, you should remove the id of this card in the selectedPapers array of objects in the App.tsx
-        }
+            props.updateSelectedPapers({id: props.id}, isChecked);
+        } 
 
     }, [isChecked]);
 
 
     function handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
-        setChecked(event.target.checked);
+        if (isChecked) { // checked to 
+            console.log("unchecked")
+            const isThisCardChecked = false;
+            props.updateSelectedPapers({id: props.id}, isThisCardChecked);
+            setChecked(false)
+        } else { // unchecked to check
+            setChecked(event.target.checked);
+        }
+        
     }
 
 

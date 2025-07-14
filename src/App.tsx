@@ -24,9 +24,24 @@ export default function App() {
 
   console.log(selectedPapers);
 
-  function updateSelectedPapers(obj: SelectedPaper) {
-    const newSelectedPapers = [...selectedPapers, obj];
-    setSelectedPapers(newSelectedPapers);
+  function updateSelectedPapers(obj: SelectedPaper, isChecked: boolean) {
+    if(isChecked) {
+      const newSelectedPapers = [...selectedPapers, obj];
+      setSelectedPapers(newSelectedPapers);
+    } else {
+      // iterate over the selected Papers and delete the object that has the same value as obj parameter
+      selectedPapers.forEach((paper) => {
+        if (paper.id === obj.id) {
+          const index = selectedPapers.findIndex(paper => paper.id === obj.id)
+          selectedPapers.splice(index, 1)
+          console.log(selectedPapers)
+          return;
+        }
+      })
+
+    }
+
+
   }
 
   console.log(selectedPapers);
