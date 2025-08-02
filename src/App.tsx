@@ -42,6 +42,7 @@ export default function App() {
   // Display the data
   return (
     <>
+    <span>note: the search might not work for the first time due to server cold start. Reload the page when it happens</span>
       <div className='flex justify-center mt-5'>
         <div>
           <div className='flex justify-center'>
