@@ -38,8 +38,6 @@ export default function List(props: ListProps) {
     const [searchResults, setSearchResults] = useState<SearchResult[]>();
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log(searchResults);
-
     useEffect(() => {
         if (!props.query) {
             console.log("Search query is null");

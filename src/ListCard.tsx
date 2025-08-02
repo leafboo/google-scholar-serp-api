@@ -18,8 +18,7 @@ export default function ListCard(props: ListCardProps) {
     const [isChecked, setChecked] = useState(false);
 
     useEffect(() => {
-        console.log(isChecked);
-
+        
         if (isChecked) {
             props.updateSelectedPapers({id: props.id}, isChecked);
         } 
@@ -28,8 +27,7 @@ export default function ListCard(props: ListCardProps) {
 
 
     function handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
-        if (isChecked) { // checked to 
-            console.log("unchecked")
+        if (isChecked) { // checked to unchecked
             const isThisCardChecked = false;
             props.updateSelectedPapers({id: props.id}, isThisCardChecked);
             setChecked(false)
