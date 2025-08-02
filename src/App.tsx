@@ -51,7 +51,7 @@ export default function App() {
           {
             selectedPapers.length !== 0 ? <Button /> : ""
           }
-          <div>Papers selected: {selectedPapers.length === 0 ? "0" : selectedPapers.length.toString()}</div>
+          <div className='mt-[2rem]'>Papers selected: {selectedPapers.length === 0 ? "0" : selectedPapers.length.toString()}</div>
         </div>
       </div>
       

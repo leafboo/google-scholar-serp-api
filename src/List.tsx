@@ -14,7 +14,7 @@ type ListProps = {
     updateSelectedPapers: (obj: SelectedPaper, isChecked: boolean) => void;
 }
 
-type SearchResults = {
+type SearchResult = {
     result_id: string;
     title: string;
     snippet: string;
@@ -24,47 +24,58 @@ type SearchResults = {
     }
 }
 
+type SearchResponse = {
+    search_metadata: {};
+    search_parameters: {};
+    search_information: {},
+    organic_results: SearchResult[]
+}
+
 
 
 export default function List(props: ListProps) {
     // useState for the data here
-    const [searchResults, setSearchResults] = useState<SearchResults[]>()
+    const [searchResults, setSearchResults] = useState<SearchResult[]>();
     const [isLoading, setIsLoading] = useState(false);
+
+    console.log(searchResults);
 
     useEffect(() => {
         if (!props.query) {
-            console.log("Search query is null")
+            console.log("Search query is null");
         } else {
-            fetchData()
+            fetchData();
             
         }
     }, [props.query])
 
 
     async function fetchData() {
-        const url = `http://localhost:3000/?q=${props.query}`
+        const url = `https://serp-api-backend.vercel.app/papers?q=${props.query}`; // change to the vercel link
         try {
-        setIsLoading(true) // re-renders first
+            setIsLoading(true) // re-renders first
 
-        const response = await fetch(url); // remove from the call stack
-        const data = await response.json();
+            const response = await fetch(url); // remove from the call stack
+            const data: SearchResponse = await response.json();
 
-        setSearchResults(data)
-        setIsLoading(false)
+            setSearchResults(data.organic_results);
+            setIsLoading(false);
 
         } catch(error: unknown) {
-        if (error instanceof Error) {
-            error.message 
-        }
+            if (error instanceof Error) {
+                error.message;
+            }
         }
     }
 
+    
     const searchResultsElement = searchResults?.map(researchPaper => <ListCard id={researchPaper.result_id}
                                                                                title={researchPaper.title}
                                                                                summary={researchPaper.publication_info.summary}
                                                                                snippet={researchPaper.snippet}
                                                                                link={researchPaper.link}
-                                                                               updateSelectedPapers={props.updateSelectedPapers}  />)
+                                                                               updateSelectedPapers={props.updateSelectedPapers}  />);
+    
 
     // this is called the 'React Element'
     // 'React Element' is the jsx part of React
@@ -75,8 +86,8 @@ export default function List(props: ListProps) {
                 <div className='overflow-y-scroll h-[36rem] flex justify-center items-center'>
                     <TailChase size="40" speed="1.75" color="gray" />
                 </div> : 
-                <div className='overflow-y-scroll h-[36rem]'>
-                    {searchResultsElement}
+                <div className='overflow-y-scroll h-[40rem]'>
+                    { searchResultsElement }
                 </div> 
             
             }
